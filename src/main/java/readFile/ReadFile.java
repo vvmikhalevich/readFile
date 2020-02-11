@@ -8,13 +8,13 @@ import java.util.Map;
 
 class ReadFile {
 
-    public static Map<String, Integer> readFile() throws IOException {
-        String thisLine = null;
-        Map<String, Integer> CountOfWords = new HashMap<String, Integer>();
+    static Map<String, Integer> readFile() throws IOException {
+        String thisLine;
+        Map<String, Integer> CountOfWords = new HashMap<>();
 
         // read file by other line
         FileReader reader = new FileReader("c:/SampleText.txt");
-        try (BufferedReader br = new BufferedReader(reader);) {
+        try (BufferedReader br = new BufferedReader(reader)) {
 
             while ((thisLine = br.readLine()) != null) {
                 // split "String" line to words with regex
@@ -41,7 +41,7 @@ class ReadFile {
                             }
                         }
 
-                        if (isLetterInText == false) {
+                        if (!isLetterInText) {
                             CountOfWords.put(letter, 1);
                         }
 
