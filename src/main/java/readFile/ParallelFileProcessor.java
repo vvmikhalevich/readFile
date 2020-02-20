@@ -6,14 +6,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-class ReadFile {
+public class ParallelFileProcessor implements FileProcessor {
+    //file reader
+    //
 
-    static Map<String, Integer> readFile() throws IOException {
+
+    @Override
+    public Map<String, Integer> countWordsInFile(String name) throws IOException {
         String thisLine;
         Map<String, Integer> CountOfWords = new HashMap<>();
 
         // read file by other line
-        FileReader reader = new FileReader("c:/SampleText.txt");
+        FileReader reader = new FileReader(name);
         try (BufferedReader br = new BufferedReader(reader)) {
 
             while ((thisLine = br.readLine()) != null) {
@@ -58,7 +62,5 @@ class ReadFile {
             System.out.println(CountOfWords);
         }
         return CountOfWords;
-    } // end
-
-
+    }
 }

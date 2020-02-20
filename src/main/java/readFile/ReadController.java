@@ -1,5 +1,6 @@
 package readFile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,9 +11,16 @@ import java.util.Map;
 @RestController
 public class ReadController {
 
-    @RequestMapping("/")
-    public Map<String,Integer> readFileAndCountLetters(@RequestParam(value="name", required=false, defaultValue="World") String name) throws IOException {
+    private final FileProcessor processor;
 
-        return ReadFile.readFile();
+    public ReadController(FileProcessor processor) {
+        this.processor = processor;
+    }
+
+    @RequestMapping("/")
+    public Map<String,Integer> readFileAndCountLetters(String name) throws IOException {
+
+        Map<String, Integer> wordCountDictionary = processor.countWordsInFile(name);
+        return wordCountDictionary;
     }
 }

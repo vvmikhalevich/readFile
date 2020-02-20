@@ -9,7 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
 
-import org.apache.commons.io.IOUtils;
+//import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,13 +40,21 @@ public class FileUploadController {
         return "redirect:/";
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String handleFileUpload(final RedirectAttributes redirectAttributes)
+        throws IOException, GeneralSecurityException {
+
+        return "/";
+    }
+
     @RequestMapping(value = "/image")
     public @ResponseBody byte[] getImage(
             @RequestParam(name = "uuid", required = true) final String uuid)
                     throws IOException {
 
         try (InputStream initialStream = new FileInputStream(FILE_FOLDER + uuid);) {
-            byte[] byteArray = IOUtils.toByteArray(initialStream);
+           byte[] byteArray = new byte[0];
+           //= IOUtils.toByteArray(initialStream);
             return byteArray;
         }
     }
