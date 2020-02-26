@@ -1,15 +1,23 @@
 package readFile;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class ParallelFileProcessor implements FileProcessor {
+
+
+
+
     //file reader
     //
-
 
     @Override
     public Map<String, Integer> countWordsInFile(String name) throws IOException {

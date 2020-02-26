@@ -11,6 +11,7 @@ import java.util.Map;
 @RestController
 public class ReadController {
 
+    @Autowired
     private final FileProcessor processor;
 
     public ReadController(FileProcessor processor) {
@@ -19,7 +20,7 @@ public class ReadController {
 
     @RequestMapping("/")
     public Map<String,Integer> readFileAndCountLetters(String name) throws IOException {
-
+        name = "c:/SampleText.txt";
         Map<String, Integer> wordCountDictionary = processor.countWordsInFile(name);
         return wordCountDictionary;
     }
