@@ -9,18 +9,30 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
 public class ParallelFileProcessor implements FileProcessor, Runnable {
 
     //file reader
     Map<String, Integer> countOfWords = new HashMap<>();
-    Queue<String> queue = new LinkedList<>();
+    Queue<String> queue = new LinkedBlockingQueue<>();
+    Boolean isFileFullread;
 
     @Override
     public Map<String, Integer> countWordsInFile(String name) throws IOException {
         readWordsInFile(name);
         countOfWords.clear();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        executorService.submit(() -> {
+            while(queue.poll()) {
+
+            }
+        })
+
         countWordsFromQueue(countOfWords, queue);
         System.out.println(countOfWords);
         return countOfWords;
@@ -28,6 +40,7 @@ public class ParallelFileProcessor implements FileProcessor, Runnable {
 
     public  Queue<String> readWordsInFile(String name) throws IOException {
         String thisLine;
+        isFileFullread = false;
 
         // read file by other line
         FileReader reader = new FileReader(name);
@@ -48,19 +61,18 @@ public class ParallelFileProcessor implements FileProcessor, Runnable {
                     }
                 }
             }
+            isFileFullread=true;
         } catch (IOException e) {
             System.out.println("Don't read file!!!");
             e.printStackTrace();
         } finally {
             System.out.println("End of read file!!!");
-            System.out.println(countOfWords);
         }
         return queue;
     }
 
-    private void countWordsFromQueue(Map<String, Integer> countOfWords, Queue<String> queue) {
-        while (!queue.isEmpty()) {
-
+    private Map<String, Integer>  countWordsFromQueue(Map<String, Integer> countOfWords, Queue<String> queue) {
+        while (!queue.isEmpty()&&isFileFullread) {
 
             String newWord = queue.poll();
             String letter = newWord.substring(0, 1);
@@ -76,12 +88,11 @@ public class ParallelFileProcessor implements FileProcessor, Runnable {
                     isLetterInText = true;
                 }
             }
-
             if (!isLetterInText) {
                 countOfWords.put(letter, 1);
             }
-
         }
+        return countOfWords;
     }
 
     @Override
