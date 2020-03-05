@@ -26,12 +26,12 @@ public class ParallelFileProcessor implements FileProcessor, Runnable {
         readWordsInFile(name);
         countOfWords.clear();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
+       /* ExecutorService executorService = Executors.newFixedThreadPool(5);
         executorService.submit(() -> {
             while(queue.poll()) {
 
             }
-        })
+        });*/
 
         countWordsFromQueue(countOfWords, queue);
         System.out.println(countOfWords);

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="localhost">
+<body>
+
+<h1>Spring Boot - Upload Status</h1>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<form method="POST" action="/uploadStatus" enctype="multipart/form-data">
+    <input type="submit" value="Count of words!!!" />
+</form>
+
+</body>
+</html>

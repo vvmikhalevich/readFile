@@ -16,7 +16,12 @@ public class ReadController {
 
     @RequestMapping("/")
     public Map<String,Integer> readFileAndCountLetters(String name) throws IOException {
-        name = "c:/SampleText.txt";
+
+        if (name==null){
+            name = "c:/SampleText.txt";
+        }
+
+
         Map<String, Integer> wordCountDictionary = processor.countWordsInFile(name);
         return wordCountDictionary;
     }
